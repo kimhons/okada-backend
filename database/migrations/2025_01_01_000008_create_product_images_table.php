@@ -14,8 +14,13 @@ return new class extends Migration
         Schema::create('product_images', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->string('image_url');
-            $table->integer('display_order')->default(0);
+            $table->string("original_url");
+            $table->string("processed_url")->nullable();
+            $table->string("thumbnail_url")->nullable();
+            $table->integer("display_order")->default(0);
+            $table->string("status")->default("pending"); // pending, processing, complete, failed
+            $table->integer("quality_score")->nullable();
+            $table->boolean("is_primary")->default(false);
             $table->timestamps();
             
             // Index for ordering
